@@ -28,7 +28,6 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    // kotlin like, small DI container: https://github.com/SalomonBrys/Kodein
     compile 'com.github.salomonbrys.kodein:kodein:3.2.0'
 
 }
