@@ -14,9 +14,6 @@ buildscript {
 repositories {
     jcenter()
     mavenCentral()
-    maven {
-        url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"
-    }
 }
 
 
@@ -33,7 +30,7 @@ dependencies {
     // kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.12"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.14.1"
 
     compile 'com.github.salomonbrys.kodein:kodein:3.2.0'
 
