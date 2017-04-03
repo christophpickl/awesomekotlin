@@ -8,6 +8,7 @@ import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.argWhere
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -16,25 +17,9 @@ import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import org.testng.annotations.Test
 
-data class ThreeValues(
-        val one: String,
-        val two: String,
-        val three: String
-)
-
-interface Service {
-    fun yesThreeParamsYesReturn(three: ThreeValues): String
-    fun yesParamNoReturn(param: String)
-    fun noParamYesReturn(): String
-    fun yesParamYesReturn(param: String): String
-}
-
-class Testee(
-        private val service: Service
-) {
-    fun passThroughNoParamYesReturn() = service.noParamYesReturn()
-}
-
+/*
+    https://github.com/nhaarman/mockito-kotlin/wiki/Mocking-and-verifying
+*/
 @Test class MockitoKotlinTest {
 
     // private lateinit var sharedMock: Service
@@ -78,6 +63,28 @@ class Testee(
         verify(mock).yesParamNoReturn(givenParam)
         verify(mock).yesParamNoReturn(eq(givenParam))
         verify(mock).yesParamNoReturn(argWhere { it.startsWith("test") })
+    }
+
+    @Test(expectedExceptions = arrayOf(AnswerException::class))
+    fun `answer`() {
+        val mockService = mock<Service>()
+
+//        whenever(mockService.noParamNoReturn()).thenAnswer { invocation: InvocationOnMock ->
+//            invocation.callRealMethod()
+//            invocation.method
+//            invocation.arguments
+//            invocation.mock as Service
+//        }
+        whenever(mockService.noParamNoReturn()).doThrow(AnswerException::class)
+
+        mockService.noParamNoReturn()
+    }
+
+    private class AnswerException : RuntimeException()
+
+
+    private class Testee(private val service: Service) {
+        fun passThroughNoParamYesReturn() = service.noParamYesReturn()
     }
 
     fun `autoinfer type, and method not mocked returns impossible null-value!`() {
@@ -156,7 +163,6 @@ class Testee(
 //            verify(a).doSomething()
 //            verify(b).doSomething()
 //        }
-
     }
 
     private class KotlinFinalClassByDefault {
@@ -172,3 +178,17 @@ class Testee(
         assertThat(finalMock.returnValue(), equalTo("mockValue"))
     }
 }
+
+interface Service {
+    fun noParamNoReturn()
+    fun yesParamNoReturn(param: String)
+    fun noParamYesReturn(): String
+    fun yesParamYesReturn(param: String): String
+    fun yesThreeParamsYesReturn(three: ThreeValues): String
+}
+
+data class ThreeValues(
+        val one: String,
+        val two: String,
+        val three: String
+)
