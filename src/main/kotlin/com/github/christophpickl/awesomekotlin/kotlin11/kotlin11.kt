@@ -1,4 +1,4 @@
-package com.github.christophpickl.awesomekotlin
+package com.github.christophpickl.awesomekotlin.kotlin11
 
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
