@@ -1,78 +1,13 @@
 package com.github.christophpickl.awesomekotlin.kotlin11
 
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
-import java.awt.Color
-
+// see: https://github.com/christophpickl/kotlin11slides
 
 //import kotlin.experimental.
 // http://kotlinlang.org/docs/reference/whatsnew11.html
 
 fun main(args: Array<String>) {
-//    `coroutines samples`()
-//    `type aliases types`()
-//    `destructuring in lambdas`()
-//    `bound callable references`()
-    `dataclass hierarchy`()
-//    `unused params underscore`()
-//    `generic enum value access`()
-//    `array like List instantiation functions`()
 }
 
-
-// =====================================================================================================================
-
-// https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#composing-suspending-functions
-// http://kotlinlang.org/docs/tutorials/coroutines-basic-jvm.html
-
-fun `coroutines samples`() {
-//    async {
-//        thinkLong()
-//    }
-    println("Launching ... (thread=${Thread.currentThread().name})") // main
-    runBlocking {
-        //    async(CommonPool) {
-        // launch(CommonPool) { .. does NOT block
-        println("Start think long")
-        thinkLong()
-        println("Stop think long")
-    }
-
-    println("Launching ... DONE")
-}
-
-suspend fun thinkLong(): Int {
-    println("thinkLong() START (thread=${Thread.currentThread().name})") // ForkJoinPool.commonPool-worker-1
-
-    delay(2000)
-    println("thinkLong() DONE")
-    return 42
-}
-
-
-// =====================================================================================================================
-fun `type aliases functions`() {
-    actOn { p, round -> println(round + " -> " + p) }
-}
-
-typealias PersonEater = (Person, String) -> Unit
-data class Person(val name: String)
-
-fun actOn(personEater: PersonEater) {
-// same as: fun actOn(personEater: (Person, String) -> Unit) {
-    listOf(Person("foo"), Person("bar")).forEach { personEater(it, "round 1") }
-}
-
-// =====================================================================================================================
-fun `type aliases types`() {
-    printPrices(mapOf(Person("foo") to 42))
-}
-
-typealias Euro = Int
-typealias PersonPrices = Map<Person, Euro>
-fun printPrices(prices: PersonPrices) {
-    prices.mapValues { (key, value) -> println("$key -> $value") }
-}
 
 
 // =====================================================================================================================
@@ -95,29 +30,6 @@ fun `destructuring in lambdas`() {
 
 }
 
-// =====================================================================================================================
-// https://github.com/Kotlin/KEEP/blob/master/proposals/data-class-inheritance.md
-fun `dataclass hierarchy`() {
-//    val userEvent = UserEvent("id", "userId")
-//    val event = MyEvent("id")
-//    println(userEvent)
-//    println("event and userEvent are equal: " + (event == (userEvent as MyEvent))) // ==> false
-    println(Triangle(1) == ColorTriangle(1, Color.BLACK))
-}
-
-// TODO i dont want MyEvent.id to be open, i just want to pass it in UserEvent through to MyEvent
-open class MyEvent(open val id: String)
-
-data class UserEvent(override val id: String, val userId: String) : MyEvent(id)
-
-open class Triangle(open val x: Int) {
-    override fun equals(other: Any?): Boolean {
-        if (other !is Triangle) return false
-        return this.x == other.x
-    }
-}
-
-data class ColorTriangle(override val x: Int, val color: Color) : Triangle(x)
 
 // =====================================================================================================================
 fun `unused params underscore`() {
