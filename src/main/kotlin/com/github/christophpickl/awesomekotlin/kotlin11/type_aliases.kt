@@ -1,7 +1,40 @@
 package com.github.christophpickl.awesomekotlin.kotlin11
 
+data class ButtonEvent(val message: String)
+
+// typealias must be toplevel thing (no nested or local ones allowed!)
+//class Event<T> {
+//    typealias EventListener = (T) -> Unit
+//    private val observers = ArrayList<EventListener>
+//}
+
+class ButtonPre11 {
+    val listeners = ArrayList<(ButtonEvent) -> Unit>()
+    fun subscribe(listener : (ButtonEvent) -> Unit): ButtonPre11 {
+        listeners += listener
+        return this
+    }
+    fun fireEvent() = ButtonEvent("pre 11").apply { listeners.forEach { it.invoke(this) } }
+}
+
+typealias ButtonListener = (ButtonEvent) -> Unit
+class ButtonWith11 {
+    val listeners = mutableListOf<ButtonListener>()
+    fun subscribe(listener : ButtonListener): ButtonWith11 {
+        listeners += listener
+        return this
+    }
+    fun fireEvent() = ButtonEvent("with 11").apply { listeners.forEach { it.invoke(this) } }
+}
+
+fun main(args: Array<String>) {
+    val myListener = { event: ButtonEvent -> println("Got event: $event")}
+    ButtonPre11().subscribe(myListener).fireEvent()
+    ButtonWith11().subscribe(myListener).fireEvent()
+}
 
 // =====================================================================================================================
+
 fun `type aliases functions`() {
     actOn { p, round -> println(round + " -> " + p) }
 }
@@ -15,6 +48,7 @@ fun actOn(personEater: PersonEater) {
 }
 
 // =====================================================================================================================
+
 fun `type aliases types`() {
     printPrices(mapOf(Person("foo") to 42))
 }
