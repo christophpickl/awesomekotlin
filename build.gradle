@@ -32,11 +32,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.14.1"
 
-    compile 'com.github.salomonbrys.kodein:kodein:3.2.0'
+    compile 'com.github.salomonbrys.kodein:kodein:3.2.0' // dependency injection for kotlin
+    compile 'org.funktionale:funktionale-all:1.0.0-final' // more functional programming
+    compile 'no.tornado:tornadofx:1.7.0' // javafx lib
 
-    compile 'org.funktionale:funktionale-all:1.0.0-final'
-
-    compile 'no.tornado:tornadofx:1.7.0'
+    compile 'io.github.microutils:kotlin-logging:1.4.4' // slf4j wrapper for kotlin
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+    runtime "ch.qos.logback:logback-core:1.2.3"
 
     // testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version" ... contains some low-level, minimalistic own test framework from jetbrains :-/
     testCompile 'org.testng:testng:6.10'
