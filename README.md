@@ -19,11 +19,14 @@ more to come
 * https://github.com/hotchemi/khronos (date extensions)
 * https://github.com/MicroUtils/kotlin-logging
 * https://github.com/Jire/Strukt (value types)
-
+* https://github.com/MarcinMoskala/PreferenceHolder (preferences)
 misc:
+
+* JPA + kotlin
 * spring5 + kotlin => https://spring.io/blog/2017/01/04/introducing-kotlin-support-in-spring-framework-5-0
 * kotlin 1.1 features
-    * coroutines (for swing ;)
+    * coroutines
 * testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 * testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 * check sammelserium: https://kotlin.link/
+* kotlinx-support-jdk8 artifact
