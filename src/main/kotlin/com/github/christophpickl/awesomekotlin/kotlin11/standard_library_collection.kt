@@ -2,24 +2,9 @@ package com.github.christophpickl.awesomekotlin.kotlin11
 
 import java.util.Arrays
 
-
 fun main(args: Array<String>) {
-    `array manipulation`()
+    `map minus`()
 }
-
-// list "comprehension"
-// =====================================================================================================================
-fun `list comprehension like`() {
-
-    // array comprehension was already existing before K11, but not for lists
-    println(IntArray(4) { it * 2 }.toList()) // [0, 2, 4, 6]
-
-    // public inline fun <T> List(size: Int, init: (index: Int) -> T): List<T>
-    println(List(4) { it * 2 })
-    // public inline fun <T> MutableList(size: Int, init: (index: Int) -> T): MutableList<T>
-    println(MutableList(4) { it * 2 })
-}
-
 
 // ON EACH
 // =====================================================================================================================
@@ -38,7 +23,8 @@ fun `onEach is like forEach but returns object again`() {
 // - groupingBy()
 // =====================================================================================================================
 
-// public inline fun <T, K> Iterable<T>.groupingBy(crossinline keySelector: (T) -> K): Grouping<T, K>
+// fun <T, K> Iterable<T>.groupingBy(keySelector: (T) -> K): Grouping<T, K>
+// fun <T, K> Iterable<T>.groupBy(keySelector: (T) -> K): Map<K, List<T>>
 fun `groupingBy group collection by key and fold`() {
     val words = "one two three four five six seven eight nine ten".split(' ')
 
@@ -47,8 +33,21 @@ fun `groupingBy group collection by key and fold`() {
     println("Frequencies with groupingBy: $frequenciesWithGroupingBy") // o=1, t=3, f=2, s=2, e=1, n=1
 
     // old way: groupBy and mapValues (create intermediate map which groupingBy does not)
-    val frequenciesWIthGroupBy = words.groupBy { it.first() }.mapValues { (_, list) -> list.size }
+    val frequenciesWIthGroupBy = words.groupBy(String::first).mapValues { (_, list) -> list.size }
     println("Frequencies with groupBy: $frequenciesWIthGroupBy")
+}
+
+// list "comprehension"
+// =====================================================================================================================
+fun `list comprehension like`() {
+
+    // array comprehension was already existing before K11, but not for lists
+    println(IntArray(4) { it * 2 }.toList()) // [0, 2, 4, 6]
+
+    // public inline fun <T> List(size: Int, init: (index: Int) -> T): List<T>
+    println(List(4) { it * 2 })
+    // public inline fun <T> MutableList(size: Int, init: (index: Int) -> T): MutableList<T>
+    println(MutableList(4) { it * 2 })
 }
 
 // - Map.toMap() and Map.toMutableMap() // i already implemented that myself, didn't i?! ;)
@@ -92,14 +91,18 @@ fun `map minus`() {
     val map = mapOf("key1" to "value1")
     println("map: $map") // {key1=value1}
 
-    val map2 = map + Pair("key2", "value2")
-//    var map2 = map
+//    val map2 = map + Pair("key2", "value2")
+//    val map2 = map + ("key2" to "value2")
+    var map2 = map
 //    map2 += Pair("key2", "value2")
+    map2 += ("key2" to "value2")
     println("map2: $map2") // {key1=value1, key2=value2}
 
     // until K11 there was no "-" support
-    val minussed = map2 - "key1" // minus uses minusAssign which looses the previous value associated/null which the underlying remove() returns :(
-    println("minussed: $minussed") // {key2=value2}
+//    val minussed = map2 - "key1" // minus uses minusAssign which looses the previous value associated/null which the underlying remove() returns :(
+//    println("minussed: $minussed") // {key2=value2}
+    map2 -= "key1"
+    println("map2: $map2")
 }
 
 // - Map.getValue(), withDefault
@@ -110,7 +113,7 @@ fun `map getValue, withDefault`() {
     println(map["key2"]) // null
 
     map.getValue("key1") // 1
-//    map.getValue("two") // throws NoSuchElementException: Key two is missing in the map.
+//    map.getValue("two") //
     // would be nice, if there was a custom exception type which got the key as an accessible field (string parsing, really?!)
 
     val mapWithDefault = map.withDefault { key -> "!$key!" }
@@ -170,6 +173,7 @@ fun `abstract collection handy base classes`() {
     val listWithOneElement = object : AbstractList<String>() { // skeletal implementation of the [List] interface
         override val size: Int
             get() = 1
+
         override fun get(index: Int): String {
             return "always foo"
         }

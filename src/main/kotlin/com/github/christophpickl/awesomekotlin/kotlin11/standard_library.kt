@@ -5,6 +5,7 @@ import java.math.BigInteger
 
 
 fun main(args: Array<String>) {
+    `takeIf highlighter`()
 }
 
 
@@ -67,7 +68,7 @@ fun `takeIf - is like filter but acts on single value and returns null if not ma
     }
 
     // takeIf works well with elvis operator
-    val file2 = File(path).takeIf { it.exists() } ?: return false
+    val file2 = File(path).takeIf(File::exists) ?: return false
 
     println("$file2 exists")
     return true
