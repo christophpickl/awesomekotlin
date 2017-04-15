@@ -1,6 +1,7 @@
 package com.github.christophpickl.awesomekotlin.kotlin11
 
 // https://kotlinlang.org/docs/reference/type-safe-builders.html#scope-control-dslmarker-since-11
+// Scope control for implicit receivers in DSLs
 
 /*
 html {
