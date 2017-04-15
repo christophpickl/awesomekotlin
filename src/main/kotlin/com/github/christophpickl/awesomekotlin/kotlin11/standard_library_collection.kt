@@ -117,19 +117,6 @@ fun `map getValue, withDefault`() {
     println(mapWithDefault.getValue("key2")) // !key2!
 }
 
-// - Abstract collections
-// =====================================================================================================================
-fun `abstract collection handy base classes`() {
-    // Abstract[Mutable](Collection|List|Set|Map)
-
-    val listWithOneElement = object : AbstractList<String>() { // skeletal implementation of the [List] interface
-        override val size: Int
-            get() = 1
-        override fun get(index: Int): String {
-            return "always foo"
-        }
-    }
-}
 
 // - Array manipulation functions
 // =====================================================================================================================
@@ -174,3 +161,17 @@ fun `array manipulation`() {
     println(arrayDeep.contentDeepHashCode()) // 9027
 }
 
+
+// - Abstract collections
+// =====================================================================================================================
+fun `abstract collection handy base classes`() {
+    // Abstract[Mutable](Collection|List|Set|Map)
+
+    val listWithOneElement = object : AbstractList<String>() { // skeletal implementation of the [List] interface
+        override val size: Int
+            get() = 1
+        override fun get(index: Int): String {
+            return "always foo"
+        }
+    }
+}
