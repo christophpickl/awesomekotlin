@@ -2,6 +2,9 @@ package com.github.christophpickl.awesomekotlin.kotlin11
 
 data class ButtonEvent(val message: String)
 
+// http://kotlinlang.org/docs/reference/type-aliases.html
+// https://github.com/Kotlin/KEEP/blob/master/proposals/type-aliases.md
+
 // typealias must be toplevel thing (no nested or local ones allowed!)
 //class Event<T> {
 //    typealias EventListener = (T) -> Unit

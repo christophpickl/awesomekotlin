@@ -5,17 +5,22 @@ package com.github.christophpickl.awesomekotlin.kotlin11
 // =====================================================================================================================
 
 fun `unused params in lambdas underscore`() {
-    numberWithUnderscore { _, i, _ -> println("i just want ints: $i") }
+    gimmeSome { _, i, _ -> println("i just want ints: $i") }
 }
 
-// UNDERSCORE IN NUMBERS
+fun gimmeSome(gimme: (String, Int, Boolean) -> Unit) {}
+
+// UNDERSCORES IN NUMBERS
 // =====================================================================================================================
 
-fun numberWithUnderscore(gimme: (String, Int, Boolean) -> Unit) {
-    // and underscores in ints, as known from java already ;)
-    gimme("a", 1_000, true)
+fun `underscores in numeric literals`() {
+    // add underscores in ints, as known from java already ;)
+    val decimal = 1_000_000
+    val hexaDecimal= 0x11_FF_22_BB
+    val bytes = 0b00000000_11111111
 }
 
+// LIST INSTANTIATION
 // =====================================================================================================================
 
 
