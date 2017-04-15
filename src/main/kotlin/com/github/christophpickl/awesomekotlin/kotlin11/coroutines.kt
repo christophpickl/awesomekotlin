@@ -7,6 +7,14 @@ import kotlinx.coroutines.experimental.runBlocking
 // https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#composing-suspending-functions
 // http://kotlinlang.org/docs/tutorials/coroutines-basic-jvm.html
 
+/*
+* enable async operations; even more lightweight than threads
+	- they scale way better than threads, very cheap
+* very low level, designed so that frameworks can build upon it
+    - create your own async/await, yield
+* offer a much nicer syntax, look like regular function invocations, not leading to "nested ladder pattern"
+ */
+
 fun `coroutines samples`() {
 //    async {
 //        thinkLong()

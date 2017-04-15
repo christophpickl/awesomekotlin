@@ -18,7 +18,20 @@ package com.github.christophpickl.awesomekotlin.kotlin11
 // - Array manipulation functions
 // -
 // -  javax.script support
+/*
 
+* string to number conversion: val port = System.getenv("PORT")?.toIntOrNull() ?: 80
+* onEach()
+* also(), takeIf(), takeUnless()
+* groupingBy()
+* toMap(), toMutableMap() // i already implemented that myself, didn't i?! ;)
+* minus operator for map
+* minOf(), maxOf()
+* list "comprehension": val squares = List(10) { index -> index * index }; val mutable = MutableList(10) { 0 }
+* Map.getValue(), withDefault
+* Array manipulation functions: contentEquals, contentHashCode, contentToString  (or deep)
+
+ */
 // ENUM
 // =====================================================================================================================
 
