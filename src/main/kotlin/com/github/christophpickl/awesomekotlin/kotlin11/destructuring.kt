@@ -8,7 +8,7 @@ fun `destructuring in lambdas for data class`() {
     // via componentX() in pre kotlin11
     val (myName, myage) = p
 
-    // no with kotlin11:
+    // now with kotlin11:
     p.let { ( lamName, lamAge) -> println("$lamName is $lamAge") }
 }
 

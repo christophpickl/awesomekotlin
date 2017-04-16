@@ -95,7 +95,9 @@ fun `inferr bound types`() {
 // =====================================================================================================================
 
 class Event<T> {
+
     private val observers = ArrayList<(T) -> Unit>()
+
     operator fun plusAssign(observer: (T) -> Unit) {
         println("add: $observer")
         observers += observer
@@ -152,7 +154,8 @@ class DoesExt {
 
     fun main() {
         GetsExt().apply(GetsExt::ordinaryMethod)
-//        GetsExt().apply(GetsExt::extendedMethod) ... compile error: "'extendedMethod' is a member and an extension at the same time. References to such elements are not allowed"
+        // GetsExt().apply(GetsExt::extendedMethod)
+        // compile error! "'extendedMethod' is a member and an extension at the same time. References to such elements are not allowed"
     }
 }
 /*

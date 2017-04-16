@@ -41,7 +41,6 @@ class HtmlContext {
     fun head(code: HeadContext.() -> Unit) {
         code(HeadContext())
     }
-
     fun onlyMakesSenseForHtml() {
         println("onlyMakesSenseForTop() invoked")
     }

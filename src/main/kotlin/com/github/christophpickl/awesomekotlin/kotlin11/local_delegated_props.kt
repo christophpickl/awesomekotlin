@@ -11,8 +11,16 @@ import kotlin.reflect.KProperty
 //- by map
 
 fun main(args: Array<String>) {
-//    `lazy local variable access`()
-    `custom delegate`()
+    `lazy string` { println("Computing lazy string.");"a" }
+}
+
+// =====================================================================================================================
+fun `lazy string`(stringProvider: () -> String) {
+    val lazyString by lazy(stringProvider)
+
+    if (someCondition() && lazyString.isNotEmpty()) { // short circuit evaluation to the rescue (but no lazy evaluation like in haskell ;)
+        println(lazyString)
+    }
 }
 
 // =====================================================================================================================
@@ -48,6 +56,7 @@ fun timeConsumingFetch(): String {
     println("loooong cat computation")
     return "long cat"
 }
+
 fun someCondition() = true
 
 
@@ -64,6 +73,7 @@ fun `custom delegate`() {
 
 class DelegatingClass {
     var anotherVerbose: String by VerboseDelegate("init value")
+
     init {
         anotherVerbose = "haha"
         anotherVerbose.length
@@ -77,6 +87,7 @@ class VerboseDelegate<V>(initValue: V) {
         println("[DELEGATE] $thisRef - get() = $currentValue")
         return currentValue
     }
+
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: V) {
         println("[DELEGATE] $thisRef - set($value) = $currentValue")
         currentValue = value

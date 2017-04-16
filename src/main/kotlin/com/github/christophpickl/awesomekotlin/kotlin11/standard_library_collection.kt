@@ -6,6 +6,17 @@ fun main(args: Array<String>) {
     `map minus`()
 }
 
+// LIST INSTANTIATION
+// =====================================================================================================================
+
+fun `array like List instantiation functions`() {
+    val squares = List(10) { index -> index * index }
+    println(squares)
+
+    val mutable = MutableList(10) { 0 }
+    println(mutable)
+}
+
 // ON EACH
 // =====================================================================================================================
 // public inline fun <T, C : Iterable<T>> C.onEach(action: (T) -> Unit): C
