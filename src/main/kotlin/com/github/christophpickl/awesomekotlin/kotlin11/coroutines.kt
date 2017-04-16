@@ -1,7 +1,10 @@
 package com.github.christophpickl.awesomekotlin.kotlin11
 
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
+import kotlin.concurrent.thread
 
 // http://kotlinlang.org/docs/reference/coroutines.html
 // http://kotlinlang.org/docs/tutorials/coroutines-basic-jvm.html
@@ -17,14 +20,43 @@ import kotlinx.coroutines.experimental.runBlocking
  */
 
 fun main(args: Array<String>) {
-    `coroutines samples`()
+    `greet blocking`()
 }
+
+// run 100.000 times with coroutines VS threads
+// =====================================================================================================================
+
+fun `run 100_000 thread`() {
+    for (i in 1..100_000) {
+        // OutOfMemoryError: unable to create new native thread
+        thread(start = true) {
+            Thread.sleep(1000)
+        }
+    }
+}
+
+fun `run 100_000 coroutines`() {
+    val jobs = List(100_000) {
+        async(CommonPool) {
+            delay(1000L)
+            1
+        }
+    }
+    runBlocking { // bridge async world
+        println(jobs.sumBy { it.await() })
+    }
+}
+
+
+
+// =====================================================================================================================
 
 fun `coroutines samples`() {
 //    async {
 //        thinkLong()
 //    }
     println("Launching ... (thread=${Thread.currentThread().name})") // main
+
     runBlocking {
         //    async(CommonPool) {
         // launch(CommonPool) { .. does NOT block
@@ -41,4 +73,31 @@ suspend fun thinkLong(): Int {
     delay(2000)
     println("thinkLong() DONE")
     return 1
+}
+
+// =====================================================================================================================
+
+fun `greet blocking`() = runBlocking {
+    println("start")
+//    greet("foo")
+//    greet("bar")
+//    greet("World")
+    listOf("foo", "bar", "World").map { name ->
+        async(CommonPool) {
+            greet(name)
+        }
+    }.map { it.await() }.joinToString().println()
+    println("end")
+}
+
+fun Any.println() {
+    println(this)
+}
+
+suspend fun greet(name: String): String {
+    val ms = (Math.random() * 3000.0).toLong() + 2000
+    println("greet($name) waits for ${ms}ms")
+    delay(ms)
+    println("greeting $name DONE.")
+    return "Hello $name!"
 }
