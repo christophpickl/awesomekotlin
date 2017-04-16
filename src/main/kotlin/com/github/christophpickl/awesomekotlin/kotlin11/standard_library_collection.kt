@@ -18,6 +18,14 @@ fun `onEach is like forEach but returns object again`() {
             .filter { it.endsWith("bar") }
             .onEach { println("Found item: $it") } // returns Iterable<String>, therefor usable in chain
             .forEach { /* finally operate on them */ }
+
+    list
+            .filter { it.endsWith("bar") }
+            // alternative to use apply { forEach {} }
+            .apply { forEach { println("Found item: $it") } }
+            .forEach { /* finally operate on them */ }
+
+
 }
 
 // - groupingBy()
@@ -167,6 +175,9 @@ fun `array manipulation`() {
 
 // - Abstract collections
 // =====================================================================================================================
+
+// motivation: https://github.com/Kotlin/KEEP/blob/master/proposals/stdlib/abstract-collections.md
+// solution: https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/src/kotlin/collections
 fun `abstract collection handy base classes`() {
     // Abstract[Mutable](Collection|List|Set|Map)
 

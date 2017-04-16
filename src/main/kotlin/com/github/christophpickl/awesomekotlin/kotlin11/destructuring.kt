@@ -22,7 +22,6 @@ fun `destructuring in lambdas for MAP`() {
         val (key, value) = entry
         "$key -> $value!"
     })
-
     // now
     println(map.mapValues { (key, value) -> "$key -> $value!" })
 

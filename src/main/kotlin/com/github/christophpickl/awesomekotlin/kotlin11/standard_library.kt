@@ -5,7 +5,7 @@ import java.math.BigInteger
 
 
 fun main(args: Array<String>) {
-    `takeIf highlighter`()
+    `minOf and maxOf find lowest or greatest of 2 or 3 values - primitive numbers, Comparable, or pass a comparator`()
 }
 
 
@@ -108,20 +108,35 @@ fun `takeUnless is same as takeIf but inverted`() {
 fun `minOf and maxOf find lowest or greatest of 2 or 3 values - primitive numbers, Comparable, or pass a comparator`() {
     val list1 = listOf("a", "b")
     val list2 = listOf("x", "y", "z")
+    // delegates to Math.min for 2 values
     println(minOf(list1.size, list2.size))
     // this looks pretty similar
     println(Math.min(list1.size, list2.size))
 
     val list3 = listOf("one")
+    // short for: minOf(a, minOf(b, c))
     println(minOf(list1.size, list2.size, list3.size))
     // now here it becomes messy
     println(Math.min(list1.size, Math.min(list2.size, list3.size)))
 
     // but minOf/maxOf do not support 4+ values :(  hey, i could implement this easily! =)
-
+    println("Custom impl")
+    println(minOf2(1, 2, 3, 4))
+    println(maxOf2(1, 2, 3, 4))
     // public fun <T> maxOf(a: T, b: T, comparator: Comparator<in T>): T
     val longestList = maxOf(list1, list2, compareBy { it.size })
 }
+
+fun <C: Comparable<C>> minOf2(int: C, vararg ints: C): C {
+    return listOf(int, *ints).min2()
+}
+fun <C: Comparable<C>> maxOf2(int: C, vararg ints: C): C {
+    return listOf(int, *ints).max2()
+}
+
+fun <T : Comparable<T>> Iterable<T>.min2(): T = min() ?: throw Exception("Must not call min2() on empty iterable!")
+fun <T : Comparable<T>> Iterable<T>.max2(): T = max() ?: throw Exception("Must not call max2() on empty iterable!")
+
 
 // mod => rem
 // =====================================================================================================================

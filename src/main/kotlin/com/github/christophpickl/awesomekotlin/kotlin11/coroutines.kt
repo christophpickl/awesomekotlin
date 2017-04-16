@@ -1,7 +1,5 @@
 package com.github.christophpickl.awesomekotlin.kotlin11
 
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 
@@ -17,6 +15,10 @@ import kotlinx.coroutines.experimental.runBlocking
     - create your own async/await, yield
 * offer a much nicer syntax, look like regular function invocations, not leading to "nested ladder pattern"
  */
+
+fun main(args: Array<String>) {
+    `coroutines samples`()
+}
 
 fun `coroutines samples`() {
 //    async {
@@ -36,8 +38,7 @@ fun `coroutines samples`() {
 
 suspend fun thinkLong(): Int {
     println("thinkLong() START (thread=${Thread.currentThread().name})") // ForkJoinPool.commonPool-worker-1
-
     delay(2000)
     println("thinkLong() DONE")
-    return 42
+    return 1
 }
