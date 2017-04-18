@@ -4,8 +4,8 @@ import java.io.File
 import java.math.BigInteger
 
 
-fun main(args: Array<String>) {
-    `minOf and maxOf find lowest or greatest of 2 or 3 values - primitive numbers, Comparable, or pass a comparator`()
+fun `💩`() {
+
 }
 
 
@@ -38,6 +38,17 @@ fun `conversion supports radix`() {
 
 // public inline fun <T> T.also(block: (T) -> Unit): T { block(this); return this }
 // public inline fun <T> T.apply(block: T.() -> Unit): T { block(); return this }
+fun `also is like apply but2`() {
+    val aWithApply = "a".apply foo@ {
+        "b".apply {
+            println(this)
+            println(this@apply)
+            println(this@foo)
+        }
+    }
+
+}
+
 fun `also is like apply but`() {
     val aWithApply = "a".apply {
         "b".apply {
@@ -127,10 +138,11 @@ fun `minOf and maxOf find lowest or greatest of 2 or 3 values - primitive number
     val longestList = maxOf(list1, list2, compareBy { it.size })
 }
 
-fun <C: Comparable<C>> minOf2(int: C, vararg ints: C): C {
+fun <C : Comparable<C>> minOf2(int: C, vararg ints: C): C {
     return listOf(int, *ints).min2()
 }
-fun <C: Comparable<C>> maxOf2(int: C, vararg ints: C): C {
+
+fun <C : Comparable<C>> maxOf2(int: C, vararg ints: C): C {
     return listOf(int, *ints).max2()
 }
 

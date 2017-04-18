@@ -10,9 +10,6 @@ import kotlin.reflect.jvm.javaMethod
 // see: https://github.com/Kotlin/KEEP/blob/master/proposals/bound-callable-references.md
 // https://github.com/Kotlin/KEEP/issues/5
 
-fun main(args: Array<String>) {
-    `different types but should still reference same method`()
-}
 
 // * List<String>>::new ??
 // * inlining is supported
