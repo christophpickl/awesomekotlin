@@ -4,7 +4,9 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
+import java.lang.Thread.sleep
 import kotlin.concurrent.thread
+import kotlin.coroutines.experimental.buildSequence
 
 // http://kotlinlang.org/docs/reference/coroutines.html
 // http://kotlinlang.org/docs/tutorials/coroutines-basic-jvm.html
@@ -21,7 +23,9 @@ import kotlin.concurrent.thread
  */
 
 fun main(args: Array<String>) {
-    imageMain()
+//    oldAsync()
+//    newAsync()
+    NEW_asyncImage()
 }
 
 // run 100.000 times with coroutines VS threads
@@ -127,12 +131,14 @@ fun OLD_imageMain() {
         }
     }
 }
+
 fun OLD_loadImage(callback: (String) -> Unit) {
     val id = ++imageSeq
     sleepRand()
     callback("image$id")
 }
-fun OLD_processImage(id: String, callback: (String)->Unit) {
+
+fun OLD_processImage(id: String, callback: (String) -> Unit) {
     sleepRand()
     callback("X$id")
 }
@@ -151,6 +157,7 @@ suspend fun NEW_loadImage(): String {
     delayRand()
     return "image$id"
 }
+
 suspend fun NEW_processImage(id: String): String {
     delayRand()
     return "X$id"
@@ -159,3 +166,84 @@ suspend fun NEW_processImage(id: String): String {
 private suspend fun delayRand() = delay((Math.random() * 500.0).toLong() + 500)
 private fun sleepRand() = Thread.sleep((Math.random() * 500.0).toLong() + 500)
 
+
+// ---------------------------------------------------------------
+
+fun NEW_asyncImage() {
+    println("async START")
+    val ass = async(CommonPool) {
+        println("pool before")
+        val result = NEW_processImage(NEW_loadImage())
+        println("pool after")
+        result
+    }
+    println("async SLEEP ...")
+//    sleep(2000L)
+    println("async SLEEP done")
+    if (ass.isCompleted) {
+        val res = ass.getCompleted() // usually done within invokeOnCompletion
+        println("result: $res")
+    } else {
+        println("didnt wait for the result ;)")
+    }
+
+    println("async END")
+}
+// =====================================================================================================================
+
+fun oldDoWork(cb: (Int) -> Unit) {
+    Thread({
+        println("WORK: sleep")
+        Thread.sleep(1000L)
+        println("WORK: done")
+        cb(20)
+    }).start() // daemon thread by default
+}
+
+fun oldAsync() {
+    println("MAIN call oldDoWark")
+    oldDoWork { result ->
+        println("got result: $result")
+    }
+    println("MAIN DONE")
+}
+
+// ---------------------------------------------------------------
+
+suspend fun newDoWork(): Int {
+    println("newDoWork delay")
+    delay(1000L)
+    println("newDoWork done")
+    return 20
+}
+
+fun newAsync() {
+    println("MAIN start")
+    val deferred = async(CommonPool) {
+        println("ASYNC: call newDoWOrk")
+        val result = newDoWork()
+        println("ASYNC: done with result $result")
+    }
+    println("... lazy as shit ...")
+    runBlocking {
+        println("MAIN waiting for deferred")
+        deferred.await()
+    }
+    println("MAIN DONE")
+}
+
+// =====================================================================================================================
+
+fun withDrStrange() {
+    // fun <T> buildIterator(builderAction: suspend SequenceBuilder<T>.() -> Unit): Iterator<T>
+    val drStrangeNumbers = buildSequence {
+        println("yield All (2-4)")
+        yieldAll(2.rangeTo(4))
+        sleepRand()
+        println("yield last 42")
+        yield(42)
+        println("after last yield")
+    }
+
+    drStrangeNumbers.forEach(::println)
+}

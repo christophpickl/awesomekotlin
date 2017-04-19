@@ -3,7 +3,7 @@ package com.github.christophpickl.awesomekotlin.kotlin11
 import java.util.Arrays
 
 fun main(args: Array<String>) {
-    `map minus`()
+    `array manipulation`()
 }
 
 // LIST INSTANTIATION
@@ -145,6 +145,11 @@ fun `map getValue, withDefault`() {
 fun `array manipulation`() {
     // new method: content[Deep](Equals|HashCode|ToString)
     // actually just delegation to: java.util.Arrays.*
+
+    val arrayx = arrayOf(arrayOf("a"), arrayOf("b"))
+    println(arrayx.toString()) // [[Ljava.lang.String;@1be6f5c3
+    println(arrayx.contentToString()) // [[Ljava.lang.String;@6b884d57, [Ljava.lang.String;@38af3868]
+    println(arrayx.contentDeepToString()) // [[a], [b]]
 
     println("TO STRING")
     println("flat:")
