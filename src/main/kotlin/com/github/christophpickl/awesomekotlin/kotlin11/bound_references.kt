@@ -10,9 +10,6 @@ import kotlin.reflect.jvm.javaMethod
 // see: https://github.com/Kotlin/KEEP/blob/master/proposals/bound-callable-references.md
 // https://github.com/Kotlin/KEEP/issues/5
 
-fun main(args: Array<String>) {
-    `different types but should still reference same method`()
-}
 
 // * List<String>>::new ??
 // * inlining is supported
@@ -95,7 +92,9 @@ fun `inferr bound types`() {
 // =====================================================================================================================
 
 class Event<T> {
+
     private val observers = ArrayList<(T) -> Unit>()
+
     operator fun plusAssign(observer: (T) -> Unit) {
         println("add: $observer")
         observers += observer
@@ -152,7 +151,8 @@ class DoesExt {
 
     fun main() {
         GetsExt().apply(GetsExt::ordinaryMethod)
-//        GetsExt().apply(GetsExt::extendedMethod) ... compile error: "'extendedMethod' is a member and an extension at the same time. References to such elements are not allowed"
+        // GetsExt().apply(GetsExt::extendedMethod)
+        // compile error! "'extendedMethod' is a member and an extension at the same time. References to such elements are not allowed"
     }
 }
 /*
