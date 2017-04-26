@@ -28,7 +28,6 @@ fun main(args: Array<String>) {
     val msNeeded = measureTimeMillis {
         //        `andreys simple sample`()
 //        `work it hard with coroutines`()
-        `work it hard with threads`()
     }
     println("$msNeeded ms needed")
 }
