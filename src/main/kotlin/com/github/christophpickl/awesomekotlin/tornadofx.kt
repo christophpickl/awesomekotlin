@@ -2,7 +2,17 @@ package com.github.christophpickl.awesomekotlin
 
 import javafx.collections.FXCollections
 import javafx.scene.layout.VBox
-import tornadofx.*
+import tornadofx.App
+import tornadofx.Controller
+import tornadofx.View
+import tornadofx.add
+import tornadofx.borderpane
+import tornadofx.button
+import tornadofx.center
+import tornadofx.label
+import tornadofx.listview
+import tornadofx.plusAssign
+import tornadofx.vbox
 
 // https://github.com/edvin/tornadofx
 // https://edvin.gitbooks.io/tornadofx-guide/content/3.%20Components.html
@@ -72,4 +82,4 @@ class BottomView : View() {
 }
 
 
-// TODO https://edvin.gitbooks.io/tornadofx-guide/content/19.%20JSON%20and%20REST.html
+// https://edvin.gitbooks.io/tornadofx-guide/content/19.%20JSON%20and%20REST.html

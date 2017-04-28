@@ -18,7 +18,7 @@ fun `dataclass hierarchy`() {
     println(Triangle(1) == ColorTriangle(1, Color.BLACK))
 }
 
-// TODO i dont want MyEvent.id to be open, i just want to pass it in UserEvent through to MyEvent
+// i dont want MyEvent.id to be open, i just want to pass it in UserEvent through to MyEvent!!! :-/
 open class MyEvent(open val id: String)
 
 data class UserEvent(override val id: String, val userId: String) : MyEvent(id)
