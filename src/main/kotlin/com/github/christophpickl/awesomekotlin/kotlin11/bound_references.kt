@@ -11,7 +11,7 @@ import kotlin.reflect.jvm.javaMethod
 // https://github.com/Kotlin/KEEP/issues/5
 
 
-// * List<String>>::new ??
+// * List<String>::new ??
 // * inlining is supported
 // * Even now a function reference has an imaginary (non-existing at runtime) KFunctionN<P1, ..., PN, R> type
 
